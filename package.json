@@ -1,0 +1,37 @@
+{
+  "name": "sliders-api",
+  "version": "1.0.0",
+  "description": "This API can calculate slide tricks based on measures sent by nodemcu.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mamuchastegui/sliders-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "rest",
+    "api",
+    "inline",
+    "skating",
+    "slides",
+    "rollers",
+    "freeskate"
+  ],
+  "author": "Matias Amuchastegui",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mamuchastegui/sliders-api/issues"
+  },
+  "homepage": "https://github.com/mamuchastegui/sliders-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.4"
+  }
+}
