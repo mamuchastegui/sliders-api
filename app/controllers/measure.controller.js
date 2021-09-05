@@ -1,14 +1,25 @@
 const db = require("../models");
+var validator = require('validator');
+
 const Measure = db.measures;
 
+function requestValidations(body) {
+    const measure = Measure(body);
+    if (!validator.isDate(measure.time)) {
+        return false
+    }
+    return true
+}
 // Create and Save a new Measure
 exports.create = (req, res) => {
+
+    console.log('body: ', req.body);
     // Validate request
-    if (!req.body.title) {
-        res.status(400).send({message: "Content can not be empty!"});
+    if (!req.body.time) {
+        res.status(400).send({message: "Time can not be empty!"});
         return;
     }
-
+    requestValidations(req.body)
     // Create a Measure
     const measure = new Measure({
         time: req.body.time,
