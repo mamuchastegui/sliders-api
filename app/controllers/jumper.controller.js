@@ -4,12 +4,11 @@ const JumperMeasure = db.jumperMeasures;
 const Jumper = db.jumper;
 
 let lastMeasure = 0;
-
 const jsonResult = utils.makeStruct('isValid code message')
 
 function requestValidations(body) {
     const measure = JumperMeasure(body);
-    if (!measure || measure.measures.length < 0) {
+    if (!measure || !measure.measures) {
         return new jsonResult(true, 400, "Measures are required");
     }
     return new jsonResult(true, 200, "ok");
@@ -26,15 +25,15 @@ exports.create = (req, res) => {
     }
 
     const measure = JumperMeasure(req.body);
-
+    let measures = measure.measures.split(",")
     lastMeasure = Math.min(...measure.measures);
     // Create a Measure
     const jumper = new Jumper({
         time: measure.time,
-        min: Math.min(...measure.measures),
-        max: Math.max(...measure.measures),
-        numberOfMeasurements: measure.measures.length,
-        measures: measure.measures,
+        min: Math.min(...measures),
+        max: Math.max(...measures),
+        numberOfMeasurements: measures.length,
+        measures: measures,
         interval: req.body.interval,
     });
 /*
@@ -56,8 +55,10 @@ exports.create = (req, res) => {
 
 // Retrieve all Measures from the database.
 exports.findAll = (req, res) => {
+    const lm = lastMeasure;
+    lastMeasure = 0;
     return res.status(200).send({
-        "last_measure": lastMeasure
+        "last_measure": lm
     });
 };
 

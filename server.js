@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 require("./app/routes/measure.routes")(app);
-require("./app/routes/jumper.routes")(app);
+jumperRoutes = require("./app/routes/jumper.routes")(app);
 
 var corsOptions = {
     origin: "http://localhost:8081"

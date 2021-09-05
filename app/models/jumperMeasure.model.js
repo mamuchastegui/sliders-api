@@ -2,7 +2,7 @@ module.exports = mongoose => {
     const jumperMeasure = mongoose.Schema(
         {
             time: Date,
-            measures: Array,
+            measures: String,
             interval: Number,
         },
         {timestamps: true}
