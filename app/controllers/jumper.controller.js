@@ -26,7 +26,10 @@ exports.create = (req, res) => {
 
     const measure = JumperMeasure(req.body);
     let measures = measure.measures.split(",")
-    lastMeasure = Math.min(...measure.measures);
+    if (measures[measures.length-1] == "") {
+        measures.pop();
+    }
+    lastMeasure = Math.min(...measures);
     // Create a Measure
     const jumper = new Jumper({
         time: measure.time,
@@ -55,10 +58,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Measures from the database.
 exports.findAll = (req, res) => {
-    const lm = lastMeasure;
-    lastMeasure = 0;
     return res.status(200).send({
-        "last_measure": lm
+        "last_measure": lastMeasure
     });
 };
 
