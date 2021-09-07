@@ -8,8 +8,8 @@ const jsonResult = utils.makeStruct('isValid code message')
 
 function requestValidations(body) {
     const measure = JumperMeasure(body);
-    if (!measure || !measure.measures) {
-        return new jsonResult(true, 400, "Measures are required");
+    if (!measure || !measure.measures || measure.measures.length == 0) {
+        return new jsonResult(false, 400, "Measures are required");
     }
     return new jsonResult(true, 200, "ok");
 }
