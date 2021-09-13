@@ -1,8 +1,16 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const cors = require("cors");
-//const { networkInterfaces } = require('os');
 
 const app = express();
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
+require("./app/routes/measure.routes")(app);
+jumperRoutes = require("./app/routes/jumper.routes")(app);
 
 var corsOptions = {
     origin: "http://localhost:8081"
@@ -35,20 +43,11 @@ db.mongoose
         process.exit();
     });*/
 
-// Network interfaces
-var ifaces = require('os').networkInterfaces();
-
-// Iterate over interfaces ...
-var adresses = Object.keys(ifaces).reduce(function (result, dev) {
-    return result.concat(ifaces[dev].reduce(function (result, details) {
-        return result.concat(details.family === 'IPv4' && !details.internal ? [details.address] : []);
-    }, []));
-});
-console.log("IP ", adresses)
-
-
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}.`);
+const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, () => {
+    const host = server.address().address;
+    const port = server.address().port;
+
+    console.log(`Server is running at http://${host}:${port}.`);
 });
